@@ -5,7 +5,9 @@ LIBS = -lcrypto
 SRCDIR = src
 BUILDDIR = build
 COMMON_SRCS = $(SRCDIR)/cli_parser/cli_parser.c \
-			#   $(SRCDIR)/algorithms/decrypt.c \
+			$(SRCDIR)/stego_config/stego_config.c \
+			$(SRCDIR)/algorithms/mode_algo.c \
+			$(SRCDIR)/algorithms/lsb_algo.c \
             #   $(SRCDIR)/algorithms/embed.c \
             #   $(SRCDIR)/algorithms/encrypt.c \
             #   $(SRCDIR)/algorithms/extract.c \
@@ -14,7 +16,7 @@ COMMON_SRCS = $(SRCDIR)/cli_parser/cli_parser.c \
             #   $(SRCDIR)/files/bmp.c \
             #   $(SRCDIR)/files/file.c \
             #   $(SRCDIR)/files/files.c \
-            #   $(SRCDIR)/stego_cfg/stego_cfg.c
+            
 COMMON_OBJS = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(COMMON_SRCS))
 MAIN_SRC = $(SRCDIR)/main.c
 MAIN_OBJ = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(MAIN_SRC))
@@ -27,7 +29,7 @@ $(BUILDDIR):
 	@mkdir -p $(BUILDDIR)/cli_parser
 	@mkdir -p $(BUILDDIR)/crypto_cfg
 	@mkdir -p $(BUILDDIR)/files
-	@mkdir -p $(BUILDDIR)/stego_cfg
+	@mkdir -p $(BUILDDIR)/stego_config
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	$(COMPILER) $(CFLAGS) -c $< -o $@

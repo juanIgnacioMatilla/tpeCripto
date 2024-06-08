@@ -136,22 +136,22 @@ static void print_help() {
     printf("Usage: stegobmp -MODE [-in filename] -p filename -out filename -steg <LSB1 | LSB4 | LSBI> [-a <aes128 | aes196 | aes256 | des>] [-m <ecb | cfb | ofb | cbc>] [-pass password] [-help] \n");
 
     printf("\nModes.\n");
-    printf("%-*s\t%s", 23, "-embed", "Enable embed mode.\n");
-    printf("%-*s\t%s", 23, "-extract", "Enable extract mode.\n");
+    printf("%-*s\t%s", 40, "-embed", "Enable embed mode.\n");
+    printf("%-*s\t%s", 40, "-extract", "Enable extract mode.\n");
 
     printf("\nRequired arguments.\n");
-    printf("%-*s\t%s", 23, "-in filename", "File to be hidden.\n");
-    printf("%-*s\t%s", 23, "-p filename", "Carrier file, must be a BMP image.\n");
-    printf("%-*s\t%s", 23, "-out filename", "Output file.\n");
-    printf("%-*s\t%s", 23, "-steg <LSB1 | LSB4 | LSBI>", "Steganography algorithm.\n");
+    printf("%-*s\t%s", 40, "-in filename", "File to be hidden.\n");
+    printf("%-*s\t%s", 40, "-p filename", "Carrier file, must be a BMP image.\n");
+    printf("%-*s\t%s", 40, "-out filename", "Output file.\n");
+    printf("%-*s\t%s", 40, "-steg <LSB1 | LSB4 | LSBI>", "Steganography algorithm.\n");
 
     printf("\nOptional arguments.\n");
-    printf("%-*s\t%s", 23, "-a <aes128 | aes196 | aes256 | des>", "Cryptography algorithm.\n");
-    printf("%-*s\t%s", 23, "-m <ecb | cfb | ofb | cbc>", "Cryptography mode.\n");
-    printf("%-*s\t%s", 23, "-pass password", "Password for encryption.\n");
+    printf("%-*s\t%s", 40, "-a <aes128 | aes196 | aes256 | des>", "Cryptography algorithm.\n");
+    printf("%-*s\t%s", 40, "-m <ecb | cfb | ofb | cbc>", "Cryptography mode.\n");
+    printf("%-*s\t%s", 40, "-pass password", "Password for encryption.\n");
 
     printf("\nAdditional arguments.\n");
-    printf("%-*s\t%s", 23, "-help", "Display usage and this help message, then exit.\n");
+    printf("%-*s\t%s", 40, "-help", "Display usage and this help message, then exit.\n");
 
     printf("\n%s\n", "Encryption will be skipped if no password is provided.");
     printf("%s\n", "Default cryptography algorithm is aes128.");
