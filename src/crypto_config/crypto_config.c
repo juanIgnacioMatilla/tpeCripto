@@ -1,6 +1,8 @@
 #include "./crypto_config.h"
 #include <openssl/evp.h>
 #include "../algorithms/crypto_algo.h"
+#include <string.h>
+
 typedef struct crypto_config{
     crypto_algo_strategy strategy;
     crypto_function fn;
@@ -28,6 +30,8 @@ typedef enum {
     cbc
 } CRYPTO_ALGO_MODE;
 
+void set_crypto_function(crypto_cfg config, int mode);
+void set_crypto_strategy(crypto_cfg config,char *algo_crypto, char*algo_mode);
 
 crypto_cfg create_crypto_config(opts options){
     if(get_password(options) == NULL){
@@ -37,7 +41,12 @@ crypto_cfg create_crypto_config(opts options){
     crypto_cfg config = calloc(1,sizeof(crypto_config));
     config->password = get_password(options);
     set_crypto_strategy(config,get_enc_algo(options),get_enc_mode(options));
-    set_crypto_function(config,get_enc_mode(options));
+    set_crypto_function(config,get_mode(options));
+    return config;
+}
+
+void free_crypto_config(crypto_cfg config){
+    free(config);
 }
 
 void set_crypto_function(crypto_cfg config, int mode){
@@ -73,7 +82,7 @@ void set_crypto_strategy(crypto_cfg config,char *algo_crypto, char*algo_mode){
 
     if(algo_mode == NULL){
         crypto_algo_mode = cbc;
-    }if (strcmp(algo_mode, "ecb") == 0) {
+    }else if (strcmp(algo_mode, "ecb") == 0) {
         crypto_algo_mode = ecb;
     } else if (strcmp(algo_mode, "cfb") == 0) {
         crypto_algo_mode = cfb;

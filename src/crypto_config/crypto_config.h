@@ -5,6 +5,7 @@
 typedef const EVP_CIPHER * (* crypto_algo_strategy)();
 
 typedef struct crypto_config* crypto_cfg;
-typedef unsigned char * (* crypto_function) (unsigned char *, uint32_t, char *, uint32_t *, crypto_algo_strategy, uint32_t);
-
+typedef unsigned char * (* crypto_function) (unsigned char * ciphertext , uint32_t ciphertext_len, char * password, uint32_t * output_len, crypto_algo_strategy crypto_algo_fn);
+crypto_cfg create_crypto_config(opts options);
+void free_crypto_config(crypto_cfg config);
 #endif
