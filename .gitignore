@@ -1,0 +1,50 @@
+# Ignore build directory and all its contents
+build/
+
+# Ignore the compiled executable
+stegobmp
+
+# Ignore object files
+*.o
+
+# Ignore dependency files
+*.d
+
+# Ignore temporary files
+*~
+
+# Ignore editor specific files (e.g., vim swap files, emacs save files)
+.*.swp
+.*.swo
+.#*
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore core dumps
+core
+*.core
+
+# Ignore generated files from Make
+Makefile~
+
+# Ignore files related to debugging
+*.out
+*.aux
+*.bak
+*.stackdump
+
+# Ignore generated files from CLion
+.idea/
+cmake-build-debug/
+cmake-build-release/
+
+# Ignore VS Code settings folder
+.vscode/
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore Windows specific files
+Thumbs.db
