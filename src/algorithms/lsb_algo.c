@@ -6,6 +6,9 @@
 #define LSB1_SIZE 8
 #define LSB1_OP 8
 
+#define LSB4_MASK 0xF0 
+#define LSB4_SIZE_FACTOR 2
+#define LSB4_OPERATIONS 2
 
 
 // gets bit i from byte, beign 1 the less sig
@@ -15,6 +18,14 @@ static uint8_t get_i_bit(uint8_t byte, uint8_t i) {
 //sets less significant bit
 static void set_ls_bit(uint8_t * byte, uint8_t value) {
     *byte = (*byte & LSB1_MASK) | value;
+}
+
+static uint8_t get_i_nibble(uint8_t byte, uint8_t i) {
+    return (byte >> ((i - 1) * 4)) & 0xF;
+}
+
+static void set_ls_nibble(uint8_t * byte, uint8_t value) {
+    *byte = (*byte & LSB4_MASK) | value;
 }
 
 void lsb1_embed(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hide, uint32_t * hide_size) {
@@ -59,10 +70,38 @@ void lsb1_extract(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hidden, u
 
 void lsb4_embed(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hide, uint32_t * hide_size) {
     // TODO: implement function
+    
+    if(*hide_size * LSB4_SIZE_FACTOR > carrier_size){
+    printf("Error cant fit hide in carrier\n");
+  } 
+
+    uint32_t i = 0;
+    for(uint32_t j = 0; j < *hide_size; j++) {
+        for(int k = LSB4_OPERATIONS; k > 0; k--) {
+            uint8_t nibble = get_i_nibble((*hide)[j], k);
+            set_ls_nibble(carrier + i++, nibble);
+        }
+    }
 }
 
 void lsb4_extract(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hidden, uint32_t * hidden_size) {
     // TODO: implement function
+    *hidden_size = carrier_size / LSB4_SIZE_FACTOR;
+
+    *hidden = calloc(1, *hidden_size);
+
+    uint8_t byte = 0;
+    uint32_t hidden_iter = 0;
+    for(uint32_t i = 0, j = 0; i < carrier_size; i++) {
+        uint8_t nibble = get_i_nibble(carrier[i], 1);
+        byte <<= 4;
+        byte |= nibble;
+        if(++j % LSB4_OPERATIONS == 0) {
+            (*hidden)[hidden_iter++] = byte;
+            byte = 0;
+            j = 0;
+        }
+    }
 }
 
 void lsbi_embed(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hide, uint32_t * hide_size) {
