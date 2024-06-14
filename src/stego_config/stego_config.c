@@ -20,6 +20,10 @@ stego_cfg create_stego_config(opts options){
     return config;
 }
 
+void run_stego_config(stego_cfg config, uint8_t *input,uint32_t input_size, char* output, char* carrier){
+    config->mode_fn(input,input_size,carrier,output,config->lsb_fn);
+}
+
 void free_stego_config(stego_cfg config){
     free(config);
 }

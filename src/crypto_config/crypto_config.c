@@ -45,6 +45,10 @@ crypto_cfg create_crypto_config(opts options){
     return config;
 }
 
+unsigned char* run_cripto_config(crypto_cfg config, unsigned char* input,uint32_t input_size , uint32_t * output_size ){
+    return config->fn(input,input_size,config->password,output_size,config->strategy);
+}
+
 void free_crypto_config(crypto_cfg config){
     free(config);
 }

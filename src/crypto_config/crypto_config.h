@@ -8,4 +8,5 @@ typedef struct crypto_config* crypto_cfg;
 typedef unsigned char * (* crypto_function) (unsigned char * ciphertext , uint32_t ciphertext_len, char * password, uint32_t * output_len, crypto_algo_strategy crypto_algo_fn);
 crypto_cfg create_crypto_config(opts options);
 void free_crypto_config(crypto_cfg config);
+unsigned char* run_cripto_config(crypto_cfg config, unsigned char* input,uint32_t input_size , uint32_t * output_size );
 #endif

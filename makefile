@@ -11,6 +11,7 @@ COMMON_SRCS = $(SRCDIR)/cli_parser/cli_parser.c \
 			$(SRCDIR)/algorithms/lsb_algo.c \
 			$(SRCDIR)/algorithms/crypto_algo.c \
 			$(SRCDIR)/general_config/general_config.c \
+			$(SRCDIR)/bmp_manager/bmp.c \
 
 COMMON_OBJS = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(COMMON_SRCS))
 MAIN_SRC = $(SRCDIR)/main.c
@@ -25,6 +26,7 @@ $(BUILDDIR):
 	@mkdir -p $(BUILDDIR)/crypto_config
 	@mkdir -p $(BUILDDIR)/general_config
 	@mkdir -p $(BUILDDIR)/stego_config
+	@mkdir -p $(BUILDDIR)/bmp_manager
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	$(COMPILER) $(CFLAGS) -c $< -o $@

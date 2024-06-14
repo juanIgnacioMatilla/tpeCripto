@@ -6,6 +6,8 @@ int main(int argc, char *argv[])
     opts options = parse_command_line(argc,argv);
     general_cfg config = create_general_config(options);
     
+    run_config(config,get_mode(options));
+
     free_general_config(config);
     free_options(options);
     return 0;
