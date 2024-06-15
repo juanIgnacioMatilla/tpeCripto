@@ -56,25 +56,14 @@ void run_config(general_cfg config, int mode){
         fclose(input_file);
         hide_data_size = 0;
         hide_data = get_hide_data(input_data,input_data_size,strchr(config->input, '.'),&hide_data_size);
-        if(config->crypto != NULL){
-            uint32_t output_size;
-            uint8_t * cipher_text = run_cripto_config(config->crypto,hide_data,hide_data_size,&output_size);
-            hide_data_size = output_size + sizeof(uint32_t);
-            free(hide_data);
-            hide_data = calloc(1,hide_data_size);
-            ((uint32_t*) hide_data)[0] = htobe32(output_size);
-            memcpy(hide_data+sizeof(uint32_t),cipher_text,output_size);
-            free(cipher_text);
-        }
-        run_stego_config(config->stego,hide_data,hide_data_size,config->output,config->carrier);
+        run_stego_config(config->stego,hide_data,hide_data_size,config->output,config->carrier,config->crypto);
         free(input_data);
-        free(hide_data);
         break;
     
     case EXTRACT:
         hide_data = NULL;
         hide_data_size = 0;
-        run_stego_config(config->stego,hide_data,hide_data_size,config->output,config->carrier);
+        run_stego_config(config->stego,hide_data,hide_data_size,config->output,config->carrier,config->crypto);
         // uint32_t data_size = be32toh(((uint32_t*)hide_data)[0]);
         // uint8_t*data = hide_data + sizeof(uint32_t);
         // char * extension = (char *) hide_data + sizeof(uint32_t) + data_size;

@@ -4,6 +4,7 @@
 #include <string.h>
 #include "../algorithms/lsb_algo.h"
 #include "../algorithms/mode_algo.h"
+#include "../crypto_config/crypto_config.h"
 
 typedef struct stego_config {
     stego_mode_algo mode_fn;
@@ -20,8 +21,8 @@ stego_cfg create_stego_config(opts options){
     return config;
 }
 
-void run_stego_config(stego_cfg config, uint8_t *input,uint32_t input_size, char* output, char* carrier){
-    config->mode_fn(input,input_size,carrier,output,config->lsb_fn);
+void run_stego_config(stego_cfg config, uint8_t *input,uint32_t input_size, char* output, char* carrier,crypto_cfg crypto_cfg){
+    config->mode_fn(input,input_size,carrier,output,config->lsb_fn,crypto_cfg);
 }
 
 void free_stego_config(stego_cfg config){
