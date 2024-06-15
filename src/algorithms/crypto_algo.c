@@ -47,6 +47,8 @@ unsigned char * encrypt(unsigned char * plaintext, uint32_t plaintext_len, char 
 
     *output_len =+ len;
     EVP_CIPHER_CTX_free(ctx);
+    free(key); 
+    free(iv);
     return output;
 }
 
