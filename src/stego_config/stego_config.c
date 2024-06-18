@@ -51,7 +51,7 @@ void set_stego_lsb(stego_cfg cfg, char* lsb, int mode){
             cfg->lsb_fn = lsb1_embed;
         } else if (strcmp(lsb, "LSB4") == 0) {
             cfg->lsb_fn = lsb4_embed;
-        } else if (strcmp(lsb, "LSBi") == 0) {
+        } else if (strcmp(lsb, "LSBI") == 0) {
             cfg->lsb_fn = lsbi_embed;
         } else {
             printf("Invalid LSB\n");
@@ -62,7 +62,7 @@ void set_stego_lsb(stego_cfg cfg, char* lsb, int mode){
             cfg->lsb_fn = lsb1_extract;
         } else if (strcmp(lsb, "LSB4") == 0) {
             cfg->lsb_fn = lsb4_extract;
-        } else if (strcmp(lsb, "LSBi") == 0) {
+        } else if (strcmp(lsb, "LSBI") == 0) {
             cfg->lsb_fn = lsbi_extract;
         } else {
             printf("Invalid LSB\n");
