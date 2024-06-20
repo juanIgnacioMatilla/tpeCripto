@@ -1,7 +1,14 @@
 
 # Proyecto StegoBMP
 
-Este proyecto implementa técnicas de esteganografía utilizando imágenes BMP de 24 bits.
+Este proyecto implementa un programa stegobmp en lenguaje C que efectúa las siguientes operaciones:
+
+• Oculta un archivo cualquiera en un archivo de extensión “.bmp”, mediante un método de
+esteganografiado elegido, con o sin password.
+• Descubre un archivo oculto en un archivo de extensión “.bmp” que haya sido previamente
+esteganografiado con uno de los métodos provistos.
+• Estegoanaliza un archivo de extensión “.bmp” para determinar si tiene un archivo
+incrustado y lo extrae correctamente.
 
 ## Requisitos
 
