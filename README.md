@@ -1,5 +1,5 @@
 
-# Proyecto StegoBMP
+# Trabajo práctico de implementación sobre estenografía 
 
 Este proyecto implementa un programa stegobmp en lenguaje C que efectúa las siguientes operaciones:
 
