@@ -35,7 +35,6 @@ void set_crypto_strategy(crypto_cfg config,char *algo_crypto, char*algo_mode);
 
 crypto_cfg create_crypto_config(opts options){
     if(get_password(options) == NULL){
-        printf("Password missing\n");
         return NULL;
     }
     crypto_cfg config = calloc(1,sizeof(crypto_config));

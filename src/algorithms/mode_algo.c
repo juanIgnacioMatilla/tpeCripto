@@ -5,9 +5,6 @@
 bmp_image open_carrier(char * carrier);
 
 void write_output(char* output, uint8_t * data, size_t size, char * extension){
-    // char * filename = calloc(1,strlen(output)+1));
-    // strcat(filename,strtok(output,"."));
-    // strcat(filename,extension);
     FILE * output_file = fopen(output,"w");
     fwrite(data,1,size,output_file);
     fclose(output_file);
@@ -25,7 +22,6 @@ void embed(uint8_t* input,uint32_t input_data_size,char* carrier,char* output, s
         input_data_size = output_size + sizeof(uint32_t);
         free(input);
         input = calloc(1,input_data_size);
-        printf("el cipher size es:%u\n",output_size);
         ((uint32_t*) input)[0] = htobe32(output_size);
         memcpy(input+sizeof(uint32_t),cipher_text,output_size);
         free(cipher_text);
@@ -48,7 +44,6 @@ void extract(uint8_t* input, uint32_t input_data_size,char* carrier,char* output
     if(crypto_conf != NULL){
       uint32_t plain_size;
       uint32_t cipher_size = be32toh(((uint32_t *) hide_data)[0]);
-      printf(" el size es :%u\n",cipher_size);
       uint8_t * plaintext = run_cripto_config(crypto_conf,hide_data + sizeof(uint32_t),cipher_size,&plain_size);
       free(hide_data);
       hide_data = plaintext;

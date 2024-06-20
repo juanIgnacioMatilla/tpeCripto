@@ -64,35 +64,11 @@ void run_config(general_cfg config, int mode){
         hide_data = NULL;
         hide_data_size = 0;
         run_stego_config(config->stego,hide_data,hide_data_size,config->output,config->carrier,config->crypto);
-        // uint32_t data_size = be32toh(((uint32_t*)hide_data)[0]);
-        // uint8_t*data = hide_data + sizeof(uint32_t);
-        // char * extension = (char *) hide_data + sizeof(uint32_t) + data_size;
-        // if(config->crypto != NULL){
-        //     uint32_t output_size;
-        //     uint8_t * cipher_text = run_cripto_config(config->crypto,hide_data+sizeof(uint32_t),data_size,&output_size);
-        //     free(hide_data);
-        //     hide_data = cipher_text;
-        //     uint32_t data_size = be32toh(((uint32_t*)hide_data)[0]);
-        //     uint8_t*data = hide_data + sizeof(uint32_t);
-        // }
-        // printf("llegue al final");
-        // write_output(config->output,data,data_size,extension);
-        // free(hide_data);
         break;
     default:
         break;
     }
 }
-//
-// void write_output(char* output, uint8_t * data, size_t size, char * extension){
-//     char * filename = calloc(1,strlen(strtok(output,".")+strlen(extension)+1));
-//     strcat(filename,strtok(output,"."));
-//     strcat(filename,extension);
-//     FILE * output_file = fopen(filename,"w");
-//     fwrite(data,1,size,output_file);
-//     free(filename);
-//     fclose(output_file);
-// }
 
 
 static uint8_t * get_hide_data(uint8_t * hide_data, uint32_t hide_data_size, char * hide_extension, uint32_t * embed_size) {
@@ -109,7 +85,4 @@ static uint8_t * get_hide_data(uint8_t * hide_data, uint32_t hide_data_size, cha
     memcpy(to_hide_data + extension_offset, hide_extension, strlen(hide_extension));
 
     return to_hide_data;
-}
-
-void read_data(FILE* input_file,uint32_t*input_data_size,uint8_t * output){
 }

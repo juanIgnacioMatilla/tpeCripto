@@ -47,7 +47,7 @@ void lsb1_embed(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hide, uint3
     // TODO: implement function
   
   if(*hide_size * LSB1_SIZE > carrier_size){
-    printf("error hide cannot fit in carrier\n");
+    printf("Error hide cannot fit in carrier\n");
   }
 
   uint32_t i = 0;
@@ -121,23 +121,22 @@ void lsb4_extract(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hidden, u
 void lsbi_embed(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hide, uint32_t * hide_size) {
     // TODO: implement function
   bit_modified bits_modified[LSBI_PATTERNS];
-  printf("el hide size es :%u\n",*hide_size);
   
   uint32_t carrier_index = 0;
     for(uint32_t j = 0; j < *hide_size; j++) {
-        for(int k = LSBI_OPERATIONS; k > 0; k--) {
-          if(carrier_index % 3 != 2){
-            uint8_t hide_bit = get_i_bit((*hide)[j], k);
-            uint8_t carrier_bit = get_i_bit(carrier[carrier_index], 1);
-            uint8_t pattern_index = get_pattern_index(carrier[carrier_index++]);
-            hide_bit == carrier_bit ? 
-                bits_modified[pattern_index].not_changed++ : bits_modified[pattern_index].changed++; 
-          }else{
-              carrier_index++;
-              k++;
-          }
-          
+      for(int k = LSBI_OPERATIONS; k > 0; k--) {
+        if(carrier_index % 3 != 2){
+          uint8_t hide_bit = get_i_bit((*hide)[j], k);
+          uint8_t carrier_bit = get_i_bit(carrier[carrier_index], 1);
+          uint8_t pattern_index = get_pattern_index(carrier[carrier_index++]);
+          hide_bit == carrier_bit ? 
+              bits_modified[pattern_index].not_changed++ : bits_modified[pattern_index].changed++; 
+        }else{
+            carrier_index++;
+            k++;
         }
+        
+      }
     }
 
   uint8_t inversion_bits[LSBI_PATTERNS] = {0};
@@ -152,31 +151,24 @@ void lsbi_embed(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hide, uint3
   }
 
   for(uint32_t j = 0; j < *hide_size; j++) {
-        for(int k = LSBI_OPERATIONS; k > 0; k--) {
-            if( i % 3 != 2){
-            uint8_t bit = get_i_bit((*hide)[j], k);
-            uint8_t pattern_index = get_pattern_index(carrier[i]);
-            set_ls_bit(carrier + i++, inversion_bits[pattern_index] == 1 ? !bit : bit);
-          } else{
-            //red byte
-            i++;
-            k++;
-          }
-        }
+    for(int k = LSBI_OPERATIONS; k > 0; k--) {
+        if( i % 3 != 2){
+        uint8_t bit = get_i_bit((*hide)[j], k);
+        uint8_t pattern_index = get_pattern_index(carrier[i]);
+        set_ls_bit(carrier + i++, inversion_bits[pattern_index] == 1 ? !bit : bit);
+      } else{
+        //red byte
+        i++;
+        k++;
+      }
     }
-
-
-
+  }
 
 }
 
 void lsbi_extract(uint8_t * carrier, uint32_t carrier_size, uint8_t ** hidden, uint32_t * hidden_size) {
     // TODO: implement function
-
-
     *hidden_size = ((carrier_size - LSBI_PATTERNS) / LSBI_SIZE_FACTOR) * 2/3;
-    printf("extraxt el size es %u\n",*hidden_size);
-
     *hidden = calloc(1, *hidden_size);
 
     uint8_t byte = 0;

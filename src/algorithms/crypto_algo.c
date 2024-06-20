@@ -24,10 +24,6 @@ unsigned char * encrypt(unsigned char * plaintext, uint32_t plaintext_len, char 
     unsigned int keylen = EVP_CIPHER_key_length(crypto_algo_fn());
     unsigned int ivlen = EVP_CIPHER_iv_length(crypto_algo_fn());
     
-    // unsigned char key[16];
-    // unsigned char iv[16];
-    //
-    // EVP_BytesToKey(crypto_algo_fn(), EVP_sha256(), NULL, (unsigned char *)password, strlen(password), 1, key, iv);
     unsigned char out[keylen+ivlen];
     PKCS5_PBKDF2_HMAC(password,strlen(password),NULL,0,10000, EVP_sha256(), keylen+ivlen, out);
     key = calloc(1,keylen);    
@@ -49,7 +45,6 @@ unsigned char * encrypt(unsigned char * plaintext, uint32_t plaintext_len, char 
     
     *output_len = len;
     
-    printf("el outputlnes es :%d\n",*output_len);
     if(EVP_EncryptFinal_ex(ctx,output+len,&len) != 1){
       printf("Error EVP FInal Encrypt\n");
     }
@@ -78,10 +73,6 @@ unsigned char * decrypt(unsigned char * ciphertext , uint32_t ciphertext_len, ch
       iv = calloc(1,ivlen);
       ustrncpy(iv,out+keylen,ivlen);
     }
-    //  unsigned char key[16];
-    // unsigned char iv[16];
-    //
-    // EVP_BytesToKey(crypto_algo_fn(), EVP_sha256(), NULL, (unsigned char *)password, strlen(password), 1, key, iv);
 
     if(EVP_DecryptInit_ex(ctx,crypto_algo_fn(),NULL,key,iv) != 1){
       printf("Error during Decryption init\n");
@@ -93,15 +84,12 @@ unsigned char * decrypt(unsigned char * ciphertext , uint32_t ciphertext_len, ch
       printf("EVP Encrypt Update failed\n");
     }
 
-    printf("el output es:%s\n",output);
     
     *output_len = len;
     if( EVP_DecryptFinal_ex(ctx,output+len,&len) != 1){
       printf("Error EVP FInal decrypt\n");
-      printf(ERR_error_string(ERR_get_error(),NULL));
-      putchar('\n');
     }
-    *output_len =+ len;
+    *output_len += len;
     EVP_CIPHER_CTX_free(ctx);
     free(key);
     if(ivlen!=0)
